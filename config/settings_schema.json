@@ -1452,6 +1452,7 @@
       }
     ]
   },
+  /* Santhosh Changes: Add custom settings */
   {
     "name": "t:custom.custom_settings",
     "settings": [
