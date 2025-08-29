@@ -1,3 +1,8 @@
+{%- comment -%}
+  Santhosh Changes:
+  - Add category select box to the contact form
+{%- endcomment -%}
+
 {{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
@@ -111,6 +116,25 @@
           placeholder="{{ 'templates.contact.form.phone' | t }}"
         >
         <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+      </div>
+      {%- comment -%}Santhosh Changes{%- endcomment -%}
+      <div class="field">
+        <select
+          name="contact[{{ 'custom.category' | t | escape }}]"
+          id="ContactForm-category"
+          class="select field__input"
+        >
+          <option value="{{ 'custom.general_questions' | t | escape }}">{{ 'custom.general_questions' | t }}</option>
+          <option value="{{ 'custom.technical_support' | t | escape }}">{{ 'custom.technical_support' | t }}</option>
+          <option value="{{ 'custom.warranty_replacement_parts' | t | escape }}">
+            {{ 'custom.warranty_replacement_parts' | t }}
+          </option>
+          <option value="{{ 'custom.quote_for_loss_and_damage_replacement' | t | escape }}">
+            {{ 'custom.quote_for_loss_and_damage_replacement' | t }}
+          </option>
+          <option value="{{ 'custom.others' | t | escape }}">{{ 'custom.others' | t }}</option>
+        </select>
+        <label class="field__label" for="ContactForm-category">{{ 'custom.category' | t }}</label>
       </div>
       <div class="field">
         <textarea

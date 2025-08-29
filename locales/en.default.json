@@ -527,5 +527,21 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
-  }
+  },
+  /** Santhosh Changes - Add custom translations */
+  "custom": {
+    "category": "Category",
+    "general_questions": "General Questions",
+    "technical_support": "Technical Support",
+    "warranty_replacement_parts": "Warranty Replacement Parts",
+    "quote_for_loss_and_damage_replacement": "Quote for Loss and Damage Replacement",
+    "others": "Others",
+    "duties_and_taxes_included_shipping_at_checkout_without_policy": "Duties and taxes included. Discounts calculated at checkout.",
+    "taxes_included_shipping_at_checkout_without_policy": "Taxes included. Discounts calculated at checkout.",
+    "duties_included_taxes_at_checkout_shipping_at_checkout_without_policy": "Duties included. Taxes and discounts calculated at checkout.",
+    "taxes_at_checkout_shipping_at_checkout_without_policy": "Taxes and discounts calculated at checkout.",
+    "free_shipping_html": "Free Shipping",
+    "read_more": "Read more",
+    "read_less": "Read less"
+  },
 }

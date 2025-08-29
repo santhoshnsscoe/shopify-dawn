@@ -2,8 +2,8 @@
   {
     "name": "theme_info",
     "theme_name": "Dawn",
-    "theme_version": "15.3.0",
-    "theme_author": "Shopify",
+    "theme_version": "15.4.0",
+    "theme_author": "Shopify and Santhosh",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
   },
@@ -1449,6 +1449,17 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
+      }
+    ]
+  },
+  {
+    "name": "t:custom.custom_settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "free_shipping",
+        "label": "t:custom.free_shipping",
+        "default": false
       }
     ]
   }

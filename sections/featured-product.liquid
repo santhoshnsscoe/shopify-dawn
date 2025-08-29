@@ -1,3 +1,8 @@
+{%- comment -%}
+  Santhosh Changes:
+  - Show free shipping message based on settings
+{%- endcomment -%}
+
 {%- liquid
   assign product = section.settings.product
   if product == null
@@ -137,7 +142,10 @@
                       {%- elsif cart.duties_included -%}
                         {{ 'products.product.duties_included' | t }}
                       {%- endif -%}
-                      {%- if shop.shipping_policy.body != blank -%}
+                      {%- comment -%}Santhosh Changes - Show shipping policy based on settings{%- endcomment -%}
+                      {%- if settings.free_shipping -%}
+                        {{ 'custom.free_shipping_html' | t }}
+                      {%- elsif shop.shipping_policy.body != blank -%}
                         {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
                       {%- endif -%}
                     </div>

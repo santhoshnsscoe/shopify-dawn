@@ -1,0 +1,167 @@
+{% comment %}
+  Renders a mega menu with an image on the right side
+  By Santhosh
+
+  Usage:
+  {% render 'custom-mega-menu-with-image' %}
+{% endcomment %}
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        if block.type != 'mega_menu_image'
+          continue
+        endif
+        assign title = block.settings.title | default: block.settings.menu.title
+        assign levels = 0
+        assign child_active = false
+        for link in block.settings.menu.links
+          if link.levels > levels
+            assign levels = link.levels
+          endif
+          if link.child_active
+            assign child_active = true
+          endif
+        endfor
+
+        assign top_image_prev = blank
+      -%}
+      <li>
+        {%- if block.settings.menu.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu mega-menu-with-image">
+              <summary
+                id="HeaderMenu-{{ block.settings.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span
+                  {%- if child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- title | escape -}}
+                </span>
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+              >
+                <div class="page-width mega-menu__content-wrapper {% if block.settings.show_banner_image and block.settings.image != blank %}mega-menu-with-image--has-banner-image{% endif %}">
+                  <ul
+                    class="mega-menu__list mega-menu__list--{{ block.settings.menu.links.size }} {% if levels == 0 and block.settings.show_top_images == false %} mega-menu__list--condensed{% endif %}"
+                    role="list"
+                  >
+                    {%- for childlink in block.settings.menu.links -%}
+                      <li>
+                        {%- if block.settings.show_top_images -%}
+                          {%- liquid
+                            assign top_image_id = 'top_image_' | append: forloop.index
+                            assign top_image_link_id = 'top_image_' | append: forloop.index | append: '_link'
+                            assign top_image = block.settings[top_image_id] | default: blank
+                            assign top_image_link = block.settings[top_image_link_id] | default: childlink.url
+
+                            if top_image != blank
+                              assign top_image_prev = top_image
+                            endif
+
+                            if top_image_prev != blank and top_image == blank
+                              assign top_image = top_image_prev
+                            endif
+                          -%}
+                          {%- if top_image != blank -%}
+                            <div class="mega-menu__top-image">
+                              <a href="{{ top_image_link }}">
+                                {{
+                                  top_image
+                                  | image_url:
+                                    width: block.settings.top_image_width,
+                                    height: block.settings.top_image_height,
+                                    crop: 'center'
+                                  | image_tag: loading: 'lazy', class: 'mega-menu__top-image-image', alt: top_image.alt
+                                  | default: childlink.title
+                                  | escape
+                                }}
+                              </a>
+                            </div>
+                          {%- endif -%}
+                        {%- endif -%}
+                        <a
+                          id="HeaderMenu-{{ block.settings.handle }}-{{ childlink.handle }}"
+                          href="{{ childlink.url }}"
+                          class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                          {% if childlink.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{ childlink.title | escape }}
+                        </a>
+                        {%- if childlink.links != blank -%}
+                          <ul class="list-unstyled" role="list">
+                            {%- for grandchildlink in childlink.links -%}
+                              <li>
+                                <a
+                                  id="HeaderMenu-{{ block.settings.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                  href="{{ grandchildlink.url }}"
+                                  class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                  {% if grandchildlink.current %}
+                                    aria-current="page"
+                                  {% endif %}
+                                >
+                                  {{ grandchildlink.title | escape }}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                  {% if block.settings.show_banner_image and block.settings.image != blank %}
+                    <div class="mega-menu__image">
+                      <a
+                        href="{{ block.settings.image_link | default: '#' }}"
+                        target="{{ block.settings.link_type | default: '_self' }}"
+                        rel="noopener"
+                        class="mega-menu-with-image__image-link"
+                      >
+                        {%- assign image_alt = block.settings.image.alt
+                          | default: block.settings.menu.title
+                          | escape
+                        -%}
+                        {{
+                          block.settings.image
+                          | image_url: width: block.settings.image_width
+                          | image_tag: loading: 'lazy', class: 'mega-menu-with-image__image', alt: image_alt
+                        }}
+                      </a>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ block.settings.handle }}"
+            href="{{ block.settings.link }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if block.settings.link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span
+              {%- if block.settings.link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>

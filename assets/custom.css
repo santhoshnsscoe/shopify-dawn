@@ -1,0 +1,108 @@
+/** Santhosh: Custom css for the dawn theme */
+
+/** show cursor pointer on hover */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/** mobile, tablet, desktop image display as per the screen size - start */
+@media screen and (max-width: 749px) {
+  .tablet-image,
+  .desktop-image {
+    display: none !important;
+  }
+
+  .mobile-image {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .mobile-image,
+  .desktop-image {
+    display: none !important;
+  }
+
+  .tablet-image {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .mobile-image,
+  .tablet-image {
+    display: none !important;
+  }
+
+  .desktop-image {
+    display: block;
+  }
+}
+/** mobile, tablet, desktop image display as per the screen size - end */
+
+/** Mega Menu with Image - start */
+.mega-menu-with-image {
+  .mega-menu__content-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    gap: 2rem;
+
+    &:not(.mega-menu-with-image--has-banner-image) {
+      display: block;
+    }
+
+    .mega-menu__list--1 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mega-menu__list--2 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mega-menu__list--3 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mega-menu__list--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mega-menu__list--5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .mega-menu__list--6 {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .mega-menu__list--7 {
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .mega-menu__list--8 {
+      grid-template-columns: repeat(8, 1fr);
+    }
+
+    .mega-menu__image {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    .mega-menu__top-image {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+
+.menu-drawer__image {
+  text-align: center;
+}
+/** Mega Menu with Image - end */

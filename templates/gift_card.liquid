@@ -1,3 +1,10 @@
+{%- comment -%}
+  Santhosh Changes: Add custom css and js files for custom changes and overrides
+  - Added custom.css
+  - Added custom-footer.css
+  - Added custom.js
+{%- endcomment -%}
+
 {% layout none %}
 
 <!doctype html>
@@ -103,6 +110,10 @@
     {%- endunless -%}
 
     {{ 'template-giftcard.css' | asset_url | stylesheet_tag }}
+
+    {%- comment -%}Santhosh Changes: Added custom.css{%- endcomment -%}
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
   </head>
 
   <body class="gradient gift-card">
@@ -185,6 +196,8 @@
       <span id="a11y-new-window-message">{{ 'accessibility.link_messages.new_window' | t }}</span>
     </div>
   </body>
+  {%- comment -%}Santhosh Changes: Added custom-footer.css{%- endcomment -%}
+  {{ 'custom-footer.css' | asset_url | stylesheet_tag }}
 </html>
 
 <script>

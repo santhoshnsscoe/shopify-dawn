@@ -1,3 +1,8 @@
+{%- comment -%}
+  Santhosh Changes:
+  - Show free shipping message based on settings
+{%- endcomment -%}
+
 {{ 'component-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -64,8 +69,11 @@
                 </div>
 
                 <small class="tax-note caption-large rte">
+                  {%- comment -%}Santhosh Changes - Show shipping policy based on settings{%- endcomment -%}
                   {%- if cart.duties_included and cart.taxes_included -%}
-                    {%- if shop.shipping_policy.body == blank -%}
+                    {%- if settings.free_shipping -%}
+                      {{ 'custom.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
+                    {%- elsif shop.shipping_policy.body == blank -%}
                       {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
                     {%- else -%}
                       {{
@@ -74,7 +82,9 @@
                       }}
                     {%- endif -%}
                   {%- elsif cart.duties_included == false and cart.taxes_included -%}
-                    {%- if shop.shipping_policy.body == blank -%}
+                    {%- if settings.free_shipping -%}
+                      {{ 'custom.taxes_included_shipping_at_checkout_without_policy' | t }}
+                    {%- elsif shop.shipping_policy.body == blank -%}
                       {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
                     {%- else -%}
                       {{
@@ -83,7 +93,9 @@
                       }}
                     {%- endif -%}
                   {%- elsif cart.duties_included and cart.taxes_included == false -%}
-                    {%- if shop.shipping_policy.body == blank -%}
+                    {%- if settings.free_shipping -%}
+                      {{ 'custom.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
+                    {%- elsif shop.shipping_policy.body == blank -%}
                       {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
                     {%- else -%}
                       {{
@@ -92,7 +104,9 @@
                       }}
                     {%- endif -%}
                   {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
-                    {%- if shop.shipping_policy.body == blank -%}
+                    {%- if settings.free_shipping -%}
+                      {{ 'custom.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
+                    {%- elsif shop.shipping_policy.body == blank -%}
                       {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
                     {%- else -%}
                       {{
@@ -147,7 +161,7 @@
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
-    },    
+    },
     {
       "type": "range",
       "id": "padding_top",

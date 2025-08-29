@@ -8,3 +8,7 @@
 ehthumbs.db
 Thumbs.db
 .shopify
+
+# Santhosh: custom files
+update-theme.md
+git.diff

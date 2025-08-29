@@ -1,3 +1,10 @@
+{%- comment -%}
+  Santhosh Changes:
+  - Show free shipping message based on settings
+  - Truncate description based on the settings
+  - Added max to 20 for product list limit and products per page for complementary products
+{%- endcomment -%}
+
 <product-info
   id="MainProduct-{{ section.id }}"
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
@@ -128,7 +135,10 @@
                     {%- elsif cart.duties_included -%}
                       {{ 'products.product.duties_included' | t }}
                     {%- endif -%}
-                    {%- if shop.shipping_policy.body != blank -%}
+                    {%- comment -%}Santhosh Changes - Show shipping policy based on settings{%- endcomment -%}
+                    {%- if settings.free_shipping -%}
+                      {{ 'custom.free_shipping_html' | t }}
+                    {%- elsif shop.shipping_policy.body != blank -%}
                       {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
                     {%- endif -%}
                   </div>
@@ -193,8 +203,31 @@
                 </p>
               {%- when 'description' -%}
                 {%- if product.description != blank -%}
+                  {%- comment -%}Santhosh Changes - Truncate description based on the settings{%- endcomment -%}
+                  {%- liquid
+                    assign description = product.description
+                    assign description_length = description | strip_html | strip | size
+                    assign truncate = false
+                    if block.settings.truncate and description_length > block.settings.length
+                      assign truncate = true
+                    endif
+                  -%}
                   <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                    {{ product.description }}
+                    {% if truncate %}
+                      <custom-truncate>
+                        <div class="custom-truncate__truncated">
+                          {{ description | truncate: block.settings.length }}
+                          <br>
+                          <a class="custom-truncate__read-more" href="#">{{ 'custom.read_more' | t }}</a>
+                        </div>
+                        <div class="custom-truncate__full hidden">
+                          {{ description }}
+                          <a class="custom-truncate__read-less" href="#">{{ 'custom.read_less' | t }}</a>
+                        </div>
+                      </custom-truncate>
+                    {% else %}
+                      {{ description }}
+                    {% endif %}
                   </div>
                 {%- endif -%}
               {%- when 'sku' -%}
@@ -931,7 +964,23 @@
     {
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
-      "limit": 1
+      "limit": 1,
+      /** santhosh changes */
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "truncate",
+          "default": false,
+          "label": "t:custom.truncate"
+        },
+        {
+          "type": "number",
+          "id": "length",
+          "default": 200,
+          "label": "t:custom.length",
+          "visible_if": "{{ block.settings.truncate == true }}"
+        }
+      ]
     },
     {
       "type": "share",
@@ -1398,20 +1447,22 @@
           "info": "t:sections.main-product.blocks.complementary_products.settings.icon.info",
           "label": "t:sections.main-product.blocks.collapsible_tab.settings.icon.label"
         },
+        /** Santhosh Changes - max to 20 */
         {
           "type": "range",
           "id": "product_list_limit",
           "min": 1,
-          "max": 10,
+          "max": 20,
           "step": 1,
           "default": 10,
           "label": "t:sections.main-product.blocks.complementary_products.settings.product_list_limit.label"
         },
+        /** Santhosh Changes - max to 20 */
         {
           "type": "range",
           "id": "products_per_page",
           "min": 1,
-          "max": 4,
+          "max": 20,
           "step": 1,
           "default": 3,
           "label": "t:sections.main-product.blocks.complementary_products.settings.products_per_page.label"
