@@ -3,6 +3,7 @@
   - Added custom.css
   - Added custom-footer.css
   - Added custom.js
+  - Added font size media queries for html tag
 {%- endcomment -%}
 
 <!doctype html>
@@ -304,6 +305,37 @@
       }
     </script>
 
+    <style>
+      /** Santhosh Changes */
+      html {
+        font-size: 10px; /* Base for extra small devices (<480px) */
+
+        /* Small devices (mobile) */
+        @media screen and (min-width: 480px) {
+          font-size: 12px;
+        }
+
+        /* Medium devices (tablets) */
+        @media screen and (min-width: 768px) {
+          font-size: 14px;
+        }
+
+        /* Large devices (laptops) */
+        @media screen and (min-width: 1024px) {
+          font-size: 16px;
+        }
+
+        /* Extra large devices (desktops) */
+        @media screen and (min-width: 1280px) {
+          font-size: 18px;
+        }
+
+        /* 2K+ monitors */
+        @media screen and (min-width: 1536px) {
+          font-size: 20px;
+        }
+      }
+    </style>
     {%- comment -%}Santhosh Changes: Added custom.css{%- endcomment -%}
     {{ 'custom.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
