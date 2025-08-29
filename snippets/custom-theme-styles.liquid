@@ -1,0 +1,23 @@
+{%- comment -%}
+  Santhosh Changes:
+  - Added font size media queries for html tag
+  - Added custom.css and custom.js
+{%- endcomment -%}
+<style>
+  /** Santhosh Changes */
+  html {
+    font-size: 10px; /* Base for extra small devices (<480px) */
+
+    /* Medium devices (tablets) */
+    @media screen and (min-width: 768px) {
+      font-size: 10px;
+    }
+
+    /* Extra large devices (desktops) */
+    @media screen and (min-width: 1280px) {
+      font-size: 10px;
+    }
+  }
+</style>
+{{ 'custom.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
