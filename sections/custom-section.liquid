@@ -1,0 +1,221 @@
+{% style %}
+  {%- if section.settings.custom_css != blank -%}
+    #shopify-section-{{ section.id }} {
+      {{ section.settings.custom_css }}
+    }
+  {%- endif -%}
+{% endstyle %}
+
+<div
+  class="custom-section custom-section--desktop-{{ section.settings.columns_desktop }} custom-section--tablet-{{ section.settings.columns_tablet }} custom-section--mobile-{{ section.settings.columns_mobile }}{% unless section.settings.equal_width %} custom-section--width-perc{% endunless %} {% unless section.settings.full_width %}page-width{% endunless %} color-{{ section.settings.section_color_scheme }}"
+  style="
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+    --gap: {{ section.settings.gap }}rem;
+    --direction: {{ section.settings.direction }};
+    --justify-content: {{ section.settings.justify_content }};
+    --align-items: {{ section.settings.align_items }};
+    {% unless section.settings.equal_width %}
+      {% assign width_perc = section.settings.width_perc | split: ' ' %}
+      {% for perc in width_perc %}
+        --width-perc-{{ forloop.index }}: {{ perc }}%;
+      {% endfor %}
+    {% endunless %}
+  "
+>
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "t:custom.custom_section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "t:custom.full_width",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "options": [
+        {
+          "value": "column",
+          "label": "t:custom.vertical"
+        },
+        {
+          "value": "row",
+          "label": "t:custom.horizontal"
+        }
+      ],
+      "default": "column",
+      "label": "t:custom.direction"
+    },
+    {
+      "type": "select",
+      "id": "justify_content",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:custom.left"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:custom.right"
+        },
+        {
+          "value": "center",
+          "label": "t:custom.center"
+        },
+        {
+          "value": "space-between",
+          "label": "t:custom.space_between"
+        }
+      ],
+      "default": "flex-start",
+      "label": "t:custom.alignment",
+      "visible_if": "{{ section.settings.direction == 'row' }}"
+    },
+    {
+      "type": "select",
+      "id": "align_items",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:custom.top"
+        },
+        {
+          "value": "center",
+          "label": "t:custom.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:custom.bottom"
+        }
+      ],
+      "default": "flex-start",
+      "label": "t:custom.position"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "t:custom.gap",
+      "default": 1
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-main"
+    },
+    {
+      "type": "header",
+      "content": "t:custom.columns",
+      "visible_if": "{{ section.settings.direction == 'row' }}"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "label": "t:custom.columns_desktop",
+      "default": 2,
+      "visible_if": "{{ section.settings.direction == 'row' }}"
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "label": "t:custom.columns_tablet",
+      "default": 2,
+      "visible_if": "{{ section.settings.direction == 'row' }}"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:custom.columns_1"
+        },
+        {
+          "value": "2",
+          "label": "t:custom.columns_2"
+        }
+      ],
+      "label": "t:custom.columns_mobile",
+      "default": "1",
+      "visible_if": "{{ section.settings.direction == 'row' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_width",
+      "label": "t:custom.equal_width",
+      "default": true,
+      "visible_if": "{{ section.settings.direction == 'row' }}"
+    },
+    {
+      "type": "text",
+      "id": "width_perc",
+      "label": "t:custom.width_perc",
+      "default": "30 30 40",
+      "info": "t:custom.width_perc_info",
+      "visible_if": "{{ section.settings.direction == 'row' and section.settings.equal_width == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:custom.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:custom.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:custom.padding_bottom",
+      "default": 0
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "t:custom.custom_css"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "_custom_divider"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:custom.custom_section",
+      "category": "t:custom.custom"
+    }
+  ]
+}
+{% endschema %}

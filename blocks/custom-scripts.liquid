@@ -1,0 +1,27 @@
+{%- if block.settings.script != blank -%}
+  {{ block.settings.script }}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:custom.scripts",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:custom.title"
+    },
+    {
+      "type": "liquid",
+      "id": "script",
+      "label": "t:custom.script"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:custom.scripts",
+      "category": "t:custom.custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,76 @@
+{% style %}
+  {%- if block.settings.custom_css != blank -%}
+    #block-{{ block.id }} {
+      {{ block.settings.custom_css }}
+    }
+  {%- endif -%}
+{% endstyle %}
+
+<div
+  class="custom-block-divider--wrapper"
+  style="
+    --height: {{ block.settings.height | default: 1 }}px;
+    --background-color: {% if block.settings.change_color %}{{ block.settings.color }}{% else %}rgb(var(--color-foreground), 0.25){% endif %};
+    --padding-top: {{ block.settings.padding_top }}px;
+    --padding-bottom: {{ block.settings.padding_bottom }}px;
+  "
+>
+  <hr class="custom-block-divider--hr">
+</div>
+
+{% schema %}
+{
+  "name": "t:custom.divider",
+  "settings": [
+    {
+      "type": "number",
+      "id": "height",
+      "label": "t:custom.height",
+      "default": 1,
+      "info": "t:custom.height_pixels"
+    },
+    {
+      "type": "checkbox",
+      "id": "change_color",
+      "label": "t:custom.change_color",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "t:custom.color",
+      "default": "#000000",
+      "visible_if": "{{ block.settings.change_color == true }}"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:custom.padding_top",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:custom.padding_bottom",
+      "default": 10,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "t:custom.custom_css"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:custom.divider",
+      "category": "t:custom.custom"
+    }
+  ]
+}
+{% endschema %}

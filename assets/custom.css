@@ -106,3 +106,111 @@
   text-align: center;
 }
 /** Mega Menu with Image - end */
+
+/** start of custom section **/
+
+.custom-section {
+  padding-block: var(--padding-top) var(--padding-bottom);
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: var(--direction);
+  gap: var(--gap);
+  justify-content: var(--justify-content);
+  align-items: var(--align-items);
+}
+
+.custom-section .shopify-block {
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+@media (max-width: 749px) {
+  .custom-section--mobile-2 .shopify-block {
+    flex: 1 1 calc(50% - var(--gap));
+  }
+}
+
+@media (min-width: 750px) and (max-width: 989px) {
+  .custom-section--tablet-2 .shopify-block {
+    flex: 1 1 calc(50% - var(--gap));
+  }
+
+  .custom-section--tablet-3 .shopify-block {
+    flex: 1 1 calc(33.33% - var(--gap));
+  }
+
+  .custom-section--tablet-4 .shopify-block {
+    flex: 1 1 calc(25% - var(--gap));
+  }
+
+  .custom-section--tablet-5 .shopify-block {
+    flex: 1 1 calc(20% - var(--gap));
+  }
+
+  .custom-section--tablet-6 .shopify-block {
+    flex: 1 1 calc(16.66% - var(--gap));
+  }
+}
+
+@media (min-width: 990px) {
+  .custom-section--desktop-2 .shopify-block {
+    flex: 1 1 calc(50% - var(--gap));
+  }
+
+  .custom-section--desktop-3 .shopify-block {
+    flex: 1 1 calc(33.33% - var(--gap));
+  }
+
+  .custom-section--desktop-4 .shopify-block {
+    flex: 1 1 calc(25% - var(--gap));
+  }
+
+  .custom-section--desktop-5 .shopify-block {
+    flex: 1 1 calc(20% - var(--gap));
+  }
+
+  .custom-section--desktop-6 .shopify-block {
+    flex: 1 1 calc(16.66% - var(--gap));
+  }
+}
+
+.custom-section--width-perc .shopify-block:nth-child(1) {
+  flex: 0 1 calc(var(--width-perc-1) - var(--gap)) !important;
+}
+
+.custom-section--width-perc .shopify-block:nth-child(2) {
+  flex: 0 1 calc(var(--width-perc-2) - var(--gap)) !important;
+}
+
+.custom-section--width-perc .shopify-block:nth-child(3) {
+  flex: 0 1 calc(var(--width-perc-3) - var(--gap)) !important;
+}
+
+.custom-section--width-perc .shopify-block:nth-child(4) {
+  flex: 0 1 calc(var(--width-perc-4) - var(--gap)) !important;
+}
+
+.custom-section--width-perc .shopify-block:nth-child(5) {
+  flex: 0 1 calc(var(--width-perc-5) - var(--gap)) !important;
+}
+
+.custom-section--width-perc .shopify-block:nth-child(6) {
+  flex: 0 1 calc(var(--width-perc-6) - var(--gap)) !important;
+}
+
+/** end of custom section **/
+
+/** divider block **/
+
+.custom-block-divider--wrapper {
+  padding-block: var(--padding-top) var(--padding-bottom);
+}
+
+.custom-block-divider--hr {
+  height: var(--height);
+  background-color: var(--background-color);
+  margin: 0;
+}
+
+/** end of divider block **/
